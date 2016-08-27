@@ -18,10 +18,17 @@ RUN echo 'export PATH="/usr/local/phpenv/bin:$PATH"' > /etc/bash.bashrc.phpenv_s
  && echo 'eval "$(phpenv init -)"' >> /etc/bash.bashrc.phpenv_setup \
  && echo '. /etc/bash.bashrc.phpenv_setup' >> /etc/bash.bashrc
 
-RUN ["/bin/bash", "-c", "source /etc/bash.bashrc.phpenv_setup"]
+# Make the location of the php environments a volume
+VOLUME /usr/local/phpenv/versions
+
+# RUN ["/bin/bash", "-c", "source /etc/bash.bashrc.phpenv_setup"]
 
 # Make a place to unpack php builds before we have verified their hashes
 RUN mkdir /usr/local/phpenv/versions/.unverified
+RUN ["/bin/bash", "-c", "chmod a+rwx -R /usr/local/phpenv/versions"]
 
 # Install prophusion script
 COPY prophusion.sh /usr/local/phpenv/bin/prophusion
+
+COPY prophusion-base-entrypoint.sh /prophusion-base-entrypoint.sh
+ENTRYPOINT ["/prophusion-base-entrypoint.sh"]
