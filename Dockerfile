@@ -13,6 +13,9 @@ RUN apt-get install -y libxml2 libssl-dev libxslt1.1 libtidy-0.99-0 libmcrypt4 l
 ENV PHPENV_ROOT /usr/local/phpenv
 RUN curl https://raw.githubusercontent.com/CHH/phpenv/master/bin/phpenv-install.sh | bash
 
+# Add phpenv and prophusion to the default PATH for noninteractive shells
+RUN echo 'PATH="/usr/local/phpenv/bin:$PATH"' >> /etc/environment
+
 # Setup $PATH for phpenv and the php binaries the system should be finding.
 RUN echo 'export PATH="/usr/local/phpenv/bin:$PATH"' > /etc/bash.bashrc.phpenv_setup \
  && echo 'eval "$(phpenv init -)"' >> /etc/bash.bashrc.phpenv_setup \
@@ -29,6 +32,9 @@ RUN ["/bin/bash", "-c", "chmod a+rwx -R /usr/local/phpenv/versions"]
 
 # Install prophusion script
 COPY prophusion.sh /usr/local/phpenv/bin/prophusion
+
+# Make a link in /usr/local/bin. This makes it easier to run `docker exec [container] prophusion ...` from the host.
+RUN ln -s /usr/local/phpenv/bin/prophusion /usr/local/bin/prophusion
 
 COPY prophusion-base-entrypoint.sh /prophusion-base-entrypoint.sh
 ENTRYPOINT ["/prophusion-base-entrypoint.sh"]

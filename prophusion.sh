@@ -7,8 +7,11 @@ export RBENV_ROOT="$PHPENV_ROOT"
 if [ "$1" == "global" -o "$1" == "local" -o "$1" == "shell" -o "$1" == "apache-version" ]
 then
   req_version="$2"
+
   if [ "$req_version" != "" ]
   then
+    version_num=$req_version
+    version_major=$(echo "$version_num" | awk -F '.' '{ print $1 }')
     is_available=0
     versions=`$PHPENV_ROOT/bin/phpenv versions 2>/dev/null | grep -oP '[\d\.]{2,}'`
     for avail_version in $versions ; do
@@ -16,7 +19,7 @@ then
       then
         if [ "$1" == "apache-version" ]
         then
-          if [ $(ls "$PHPENV_ROOT/versions/$avail_version/libphp?.so" | wc -l) -eq 1 ]
+          if [ $(ls "$PHPENV_ROOT/versions/$avail_version/"libphp?.so | wc -l) -eq 1 ]
           then
             is_available=1
           fi
@@ -34,7 +37,6 @@ then
       echo "<http://www.php.net/software/>"
       echo
 
-      version_num=$req_version
       if [ "$1" == "apache-version" ]
       then
         req_version="$req_version-apache"
@@ -79,6 +81,14 @@ then
           exit 1
         fi
       fi
+    fi
+
+    if [ "$1" == "apache-version" ]
+    then
+      rm /etc/apache2/mods-enabled/php*.conf
+      rm /etc/apache2/mods-enabled/php*.load
+
+      a2enmod "php$version_major"
     fi
   else
     >&2 echo "No PHP version specified. Usage: prophusion [global|local|shell] [php-version]"
