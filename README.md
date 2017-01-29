@@ -7,7 +7,7 @@ noun
 an abundance or large quantity of something.
 
 ## What's prophusion?
-Prophusion makes it fast and easy to test your php code against **any** release of php since 5.3.9. There are 
+Prophusion makes it fast and easy to test your php code against **any** release of php since 5.3.9. There are
 over 140 releases you can choose from.
 
 It consists of

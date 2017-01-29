@@ -36,4 +36,9 @@ then
   cmd="/bin/bash"
 fi
 
+if [ "$CONTAINER_DIR" != "" ]
+then
+  cd "$CONTAINER_DIR"
+fi
+
 exec $cmd
