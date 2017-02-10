@@ -25,6 +25,11 @@ fi
 # TODO: re-evaluate if this is that important. Lets you run as non-root, but slows things down if using a cache volume.
 chmod a+rwx -R /usr/local/phpenv/versions
 
+if [ "$XDEBUG2HOST" != "" ]
+then
+  . /usr/local/bin/xdebug2host
+fi
+
 cmd=$1
 if [ -z "$cmd" -a "$CONTAINER_CMD" != "" ]
 then

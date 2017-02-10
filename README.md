@@ -66,6 +66,22 @@ zip, mysqli, Zend OPcache, xdebug
  
  If you do this, it may be difficult to synchronize when the version change occurs with processes running within
  the container.
+### Sending xdebug connections to the docker host
+ There is built-in assistance for configuring xdebug within the container
+ to connect out to a debugger you have listening on the docker host. Simply
+ add `-e XDEBUG2HOST=1` to your `docker run` at container startup time, or
+ run the command `xdebug2host` after the container has started. This sets a
+ few environment variables to the values xdebug is looking for.
+ 
+ Additionally, the value of `XDEBUG2HOST` is copied into `PHP_IDE_CONFIG`.
+ This can be used to cue your chosen debugger to use certain predefined
+ container path → host path mappings to your source files, or other custom 
+ preferences for this project/container.
+ 
+ If you use PHPStorm to debug, you can set `XDEBUG2HOST="serverName=xyz"` and 
+ then [configure path mappings in PHPStorm](https://www.jetbrains.com/help/phpstorm/2016.3/servers.html)
+ for a server 'xyz'.
+  
 
 ## Bugs, Feature Requests, & Contributing
  * If you've found a bug or want to request a feature, please

@@ -32,6 +32,8 @@ RUN ["/bin/bash", "-c", "chmod a+rwx -R /usr/local/phpenv/versions"]
 
 # Install prophusion script
 COPY prophusion.sh /usr/local/phpenv/bin/prophusion
+# Install xdebug2host script
+COPY xdebug2host.sh /usr/local/bin/xdebug2host
 
 # Make a link in /usr/local/bin. This makes it easier to run `docker exec [container] prophusion ...` from the host.
 RUN ln -s /usr/local/phpenv/bin/prophusion /usr/local/bin/prophusion
