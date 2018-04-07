@@ -1,17 +1,15 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 MAINTAINER Mike Baynton <mike@mbaynton.com>
 
-RUN apt-get update
-
-# install curl
-RUN apt-get install -y curl git bzip2 && apt-get clean
+# install packages needed to do much of anything
+RUN apt-get update && apt-get install -y apt-utils curl git bzip2 && apt-get clean
 
 # install a few libraries php pretty much always should have
-RUN apt-get install -y libxml2 libssl-dev libxslt1.1 libtidy-0.99-0 libmcrypt4 libjpeg8 libicu55 libpng12-0 libcurl3 && apt-get clean
+RUN apt-get install -y libxml2 libssl-dev libxslt1.1 libtidy5 libmcrypt4 libjpeg8 libicu60 libpng16-16 libcurl4 && apt-get clean
 
 # install phpenv
 ENV PHPENV_ROOT /usr/local/phpenv
-RUN curl https://raw.githubusercontent.com/CHH/phpenv/master/bin/phpenv-install.sh | bash
+RUN /usr/bin/curl https://raw.githubusercontent.com/CHH/phpenv/master/bin/phpenv-install.sh | bash
 
 # Add phpenv and prophusion to the default PATH for noninteractive shells
 RUN echo 'PATH="/usr/local/phpenv/bin:$PATH"' >> /etc/environment
