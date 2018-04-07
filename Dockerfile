@@ -1,13 +1,13 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER Mike Baynton <mike@mbaynton.com>
 
 RUN apt-get update
 
 # install curl
-RUN apt-get install -y curl git && apt-get clean
+RUN apt-get install -y curl git bzip2 && apt-get clean
 
 # install a few libraries php pretty much always should have
-RUN apt-get install -y libxml2 libssl-dev libxslt1.1 libtidy-0.99-0 libmcrypt4 libjpeg8 libicu52 && apt-get clean
+RUN apt-get install -y libxml2 libssl-dev libxslt1.1 libtidy-0.99-0 libmcrypt4 libjpeg8 libicu55 libpng12-0 libcurl3 && apt-get clean
 
 # install phpenv
 ENV PHPENV_ROOT /usr/local/phpenv
