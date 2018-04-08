@@ -17,7 +17,8 @@ RUN echo 'PATH="/usr/local/phpenv/bin:$PATH"' >> /etc/environment
 # Setup $PATH for phpenv and the php binaries the system should be finding.
 RUN echo 'export PATH="/usr/local/phpenv/bin:$PATH"' > /etc/bash.bashrc.phpenv_setup \
  && echo 'eval "$(phpenv init -)"' >> /etc/bash.bashrc.phpenv_setup \
- && echo '. /etc/bash.bashrc.phpenv_setup' >> /etc/bash.bashrc
+ && echo '. /etc/bash.bashrc.phpenv_setup' >> /etc/bash.bashrc \
+ && echo '18.04' > /prophusion_build_target
 
 # Make the location of the php environments a volume
 VOLUME /usr/local/phpenv/versions
