@@ -2,7 +2,8 @@ FROM ubuntu:18.04
 MAINTAINER Mike Baynton <mike@mbaynton.com>
 
 # install packages needed to do much of anything
-RUN apt-get update && apt-get install -y apt-utils curl git bzip2 && apt-get clean
+# iproute2 for /sbin/ip, used by xdebug2host.sh
+RUN apt-get update && apt-get install -y apt-utils curl git bzip2 iproute2 && apt-get clean
 
 # install a few libraries php pretty much always should have
 RUN apt-get install -y libxml2 libssl-dev libxslt1.1 libtidy5 libmcrypt4 libjpeg8 libicu60 libpng16-16 libcurl4 && apt-get clean
