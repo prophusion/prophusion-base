@@ -12,9 +12,6 @@ RUN apt-get install -y libxml2 libssl-dev libxslt1.1 libtidy5 libmcrypt4 libjpeg
 ENV PHPENV_ROOT /usr/local/phpenv
 RUN /usr/bin/curl https://raw.githubusercontent.com/CHH/phpenv/master/bin/phpenv-install.sh | bash
 
-# Add phpenv and prophusion to the default PATH for noninteractive shells
-RUN echo 'PATH="/usr/local/phpenv/bin:$PATH"' >> /etc/environment
-
 # Setup $PATH for phpenv and the php binaries the system should be finding.
 RUN echo 'export PATH="/usr/local/phpenv/bin:$PATH"' > /etc/bash.bashrc.phpenv_setup \
  && echo 'eval "$(phpenv init -)"' >> /etc/bash.bashrc.phpenv_setup \
